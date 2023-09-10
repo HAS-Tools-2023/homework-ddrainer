@@ -15,7 +15,7 @@ import os
 filename = 'streamflow_week2.txt'
 filepath = os.path.join('../../data', filename)
 
-data=pd.read_table(filepath, sep = '\t', skiprows=30, 
+data=pd.read_table(filepath, sep = '\t', skiprows=31, 
         names=['agency_cd', 'site_no', 'datetime', 'flow', 'code']
         )
 data = data.set_index('datetime')
