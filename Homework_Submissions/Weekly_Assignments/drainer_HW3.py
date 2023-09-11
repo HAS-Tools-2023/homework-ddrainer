@@ -259,4 +259,91 @@ print("This is the floats.")
 print(sum(isinstance(i, float) for i in flow))
 print("This is the bools.")
 print(sum(isinstance(i, bool) for i in flow))
+
+
+# %%
+
+plot_list =[]
+
+for i in range(len(flow)):
+        if month[i] == 9:
+                plot_list.append(i)
+
+flow_set = [flow[j] for j in plot_list]
+
+print(flow_set)
+
+data=pd.read_table(filepath, sep = '\t', skiprows=31, 
+        names=['agency_cd', 'site_no', 'datetime', 'flow', 'code']
+        )
+data = data.set_index('datetime')
+
+# %%
+# Step 5 - Make a plot of the data
+# Change the numbers on the followin lines to plot a different portion of the data
+ax=data.iloc[plot_list]['flow'].plot(linewidth=0.5)
+ax.set_ylabel('Daily Flow [cfs]')
+ax.set_xlabel('Date')
+
+# %%
+# Make a plot of a single year
+plot_list =[]
+
+for i in range(len(flow)):
+        if month[i] == 9 and year[i] == 2015:
+                plot_list.append(i)
+
+flow_set = [flow[j] for j in plot_list]
+
+print(flow_set)
+
+data=pd.read_table(filepath, sep = '\t', skiprows=31, 
+        names=['agency_cd', 'site_no', 'datetime', 'flow', 'code']
+        )
+data = data.set_index('datetime')
+
+# Step 5 - Make a plot of the data
+# Change the numbers on the followin lines to plot a different portion of the data
+ax=data.iloc[plot_list]['flow'].plot(linewidth=0.5)
+ax.set_ylabel('Daily Flow [cfs]')
+ax.set_xlabel('Date')
+
+
+# %%
+# Set plot_year to first year of plot and graph all years for Sep
+plot_year = 1989
+
+# Add 1 to plot_year, while plot_year is between 1989 and 2023 and 
+# put the plot for each yar on the same graph
+while plot_year in range(1989, 2023):
+    
+        plot_list =[]
+
+        for i in range(len(flow)):
+                if month[i] == 9 and year[i] == plot_year:
+                        plot_list.append(i)
+
+        flow_set = [flow[j] for j in plot_list]
+
+        #print(flow_set)
+
+        data=pd.read_table(filepath, sep = '\t', skiprows=31, 
+                names=['agency_cd', 'site_no', 'datetime', 'flow', 'code']
+                )
+        data = data.set_index('datetime')
+
+        # Step 5 - Make a plot of the data
+        # Change the numbers on the followin lines to plot a different portion of the data
+        ax=data.iloc[plot_list]['flow'].plot(linewidth=0.5)
+        ax.set_ylabel('Daily Flow [cfs]')
+        ax.set_xlabel('Date')
+
+        plot_year += 1
+
+
+
+
+
+
+
 # %%
