@@ -25,19 +25,20 @@ print(x.size-1)
 
 #%%
 # 1.4. Get the first 5 values and last 5 values out of x and print them?
+print(x[:5])
 
-
-
-#%%
 # %% Exercise 2: Working with a 2-D array:
 # 2.1 Get the first 9 values of x, and reshape them to a
 #    3x3 matrix. Assign this matrix to the variable `y`
-y = None
-print(y)
+z = x.copy()[:9]
+y = z.reshape(3,3), print(y)
 
 #BONUS show how you can do this with two lines of code and how you can do it with one line of code. 
 
+print(x.copy()[:9].reshape(3,3))
+
 ##Comprehension question: Is reshape a function, a method or an attribute of y?  How do we know? 
+## Reshape is a ...
 
 #%%
 # 2.2 Get the middle value out of y and print it?
@@ -47,8 +48,11 @@ y = np.array([
     [6, 7, 8],
 ])
 
+print(y[1,1])
+
 #%%
 # 2.3. Get the first row out of y and print it?
+print(y[0])
 
 # %%
 # 2.4 If you save the first row of y to a new variable w what type of object is w? 
@@ -61,8 +65,9 @@ y = np.array([
 #%% Exercise 3 Creating numpy arrays: 
 
 # %%
-# 3.1 use the np.arange function and the reshape method to create a numpy array with 3 rows and two columns that has values 0-9
+# 3.1 use the np.arange function and the reshape method to create a numpy array with 3 rows and two columns that has values 0-9 ... use random generated numbers from 0-9
 
+print(np.random.randint(10,size=6))
 
 # %%
 # 3.2 use the np.ones function to create a 4 by 4 matrix with all ones 

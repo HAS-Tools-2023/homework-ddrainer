@@ -74,3 +74,11 @@ array_length = x.size
 print(x[array_length - 5:])
 
 # %%
+import numpy as np
+x=np.arange(10)
+x.reshape(5,2)
+# %%
+y=np.arange(100)
+print(y)
+
+# %%
