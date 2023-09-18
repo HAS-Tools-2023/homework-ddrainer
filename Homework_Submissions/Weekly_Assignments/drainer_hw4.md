@@ -4,6 +4,14 @@ Homework Assignment 4 <br>
 
 <h3> Assignment Question Answers <br>
 
+
+##
+## Grade
+3/3 Nice job
+- See my comments and edits on your HW3 submission for markdown formatting rather than html. 
+- Your answer for #3 was good but I can see how my question phrasing may have been confusing. 
+- You are just missing your reflection on the Python exercises but I gave you an extension on that over email so didn't deduct points for that here. 
+##
 <h4>
 
 1. I calculated the mean flow for all of Sep to get an idea of what the average streamflow is for that month, which resulted in approx 123 cfs. I then broke out the most frequent values of all of the streamflow, which appeared to be less than 300 cfs for all months. Looking at just the data for the month of Sep, I calculated the max, min and median values for the subset of flow that is less than 300 cfs for the month of Sep. These values lined up with the trends of most recent observed streamflow, so I picked some values that were a happy medium for the next couple of weeks. Flow seems to fluctuate between 50-80 cfs and 110-130 cfs regardless of the presence of rainfall near Campe Verde. <br>
