@@ -2,6 +2,12 @@
 ## HWRS 501
 ## 26 Sep 2023, Homework 5
 
+### Grade
+3/3 - Nice work!
+- A quick answer to your dimension question. if you have an array that has rows and columns its a 2D array regardless of how many rows there are and how many columns there are. If its just a single stream of numbers then its a 1 dimensional array. That said when I'm asking for the dimensions I'm asking for the size of each dimension so for a 2D array I'm asking how many rows there are and how many columns there are. The total size of this 2D array equals the total number of number it contains so that would be the number of rows times the number of columns. Hope that helps! Happy to clarify further in class. 
+- We will talk more in class about how to visualize and debug hopefully this will help some but feel free to chime in if we don't cover your questions. 
+- The issue with your ordering is that you should have used np.repeat for the year column not np.tile
+
 ### Forecast Summary
    
 - My forecast this week is going off of an average of the last two week's observed data. I am still clueless on how to forecast streamflow, but based on the max, median, and mean of the last two and four weeks, I elected to go with something a little closer to the mean, maybe a little lower. No rain is still expected near the site for the  next several days. The average for the last two weeks was about 84 cfs, and 87 for the last four weeks. Max values were 111 and 157 for those same time periods, respectively. I think it's safer to go with something close to the mean, but a little lower due to the absence of any new precipitation. We'll go with 80 for the first week, and 85 for the two week forecasts.
