@@ -48,3 +48,13 @@ print(e)
 
 
 # %%
+# test stuff
+import numpy as np
+
+np.tile(np.arange(2015,2020),5)
+
+print(np.repeat(np.arange(2015,2020),12))
+
+print(np.tile(np.arange(1,13),5))
+
+# %%
