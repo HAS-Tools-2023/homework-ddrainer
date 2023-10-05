@@ -12,17 +12,17 @@ print(data_frame)
 # %%
 # Change all rows with vowels to 3
 
-first_df = data_frame #make a copy to anew dataframe
+first_df = data_frame # make a copy to a new dataframe
 
-first_df.loc['a'] = 3 #set row a to all 3
-first_df.loc['e'] = 3 #set row e to all 3
+first_df.loc[['a','e']] = 3 # set row a and e to all 3
 
 print(first_df)
 
 # %%
 # Multiply first 4 rows by 7
 
-first_df.iloc[:4] =first_df.iloc[:4] * 7
+first_df.iloc[:4] = first_df.iloc[:4] * 7
+first_df.loc[['a','b','c','d']] * 7
 
 print(first_df)
 
@@ -32,8 +32,8 @@ print(first_df)
 first_df.loc[['a','c','e','g'], ['data1','data3']] = 0 # Set every other row in column data1 and data3 to 0
 first_df.loc[['b','d','f'], ['data2']] = 0 # Set every other row in column data2 to 0
 
-first_df.loc[['a','c','e','g'], ['data2']] = 1
-first_df.loc[['b','d','f'], ['data1','data3']] = 1
+first_df.loc[['a','c','e','g'], ['data2']] = 1 # Set every other row in column data2 to 1
+first_df.loc[['b','d','f'], ['data1','data3']] = 1 # Set every other row in columns data1 and data3 to 1
 
 print(first_df)
 
