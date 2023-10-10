@@ -2,6 +2,10 @@
 ## HWRS 501
 ## 5 Oct 2023, Homework 6
 
+### Grade
+3/3 - Great job!
+###
+
 ### Forecast Summary
 
 * Looking at upstream forecasts for Sedona (KSEZ) and Flagstaff (KFLG), which look to be in higher elevation, there is only a very slight chance of rain over the next week. I averaged the last 5 years of data for the first half and second half of October separately. This year, the average flow in the first half of Oct so far is the lowest it has been in the period of record. Since there looks to be a little bit of correlation between the flow at Camp Verde and rainfall at KSEZ and KFLG, based on observations from a light rain event in mid-September, I'm going to try and use this as the basis for my streamflow forecast--at least for week1. For week 2, I'm going to go closer to the average for the second half of Oct.
