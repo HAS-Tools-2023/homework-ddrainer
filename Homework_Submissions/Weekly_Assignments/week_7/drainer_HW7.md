@@ -2,6 +2,13 @@
 ## HWRS 501
 ## 16 Oct 2023, Homework 7
 
+### Grade
+3/3:Nice work!
+- Your plots looks great and I'm glad you were able to experiment with a lot of options. 
+- We will talk about your groupby issue in class, I'm guessing the issue is that you actually had a multi index if you grouped by multiple things. 
+- We will also talk about the bar graphs and the binning more in class today. 
+###
+
 1. Forecast Summary: This week I tried to use some additional kind of statistical analysis to help come up with a forecast, but it din't really work out too well, and didn't give me any more insight to the flow other than just looking at the most recent data and making a guess, then determining the likelihood of such a flow by comparing stats of the week of 22-28 Oct from all years available. I'll stick with flows in the 70-75 cfs range, since there seems to be no rain in the forecast for the foreseeable future.
 2. 5 plots that summarize the streamflow data:
    1. Plot 1: Line Plot of Average Flow during the week of 22-28 Oct for all years available
