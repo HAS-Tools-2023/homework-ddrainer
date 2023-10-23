@@ -44,6 +44,25 @@ min_oct_weekly_flow = selected_rows.groupby(['year']).agg({'flow': 'min'})
 median_oct_weekly_flow = selected_rows.groupby(['year']).agg({'flow': 'median'})
 
 # %%
+# Bar Graph 
+
+fig, ax = plt.subplots()
+ax.bar(avg_oct_weekly_flow.index, avg_oct_weekly_flow['flow'], color='green')
+ax.set_xlabel('Years')
+ax.set_ylabel('Streamflow in cfs')
+ax.set_title('Avg Streamflow for Week of 22-28 Oct')
+
+fig, ax = plt.subplots()
+ax.bar(max_oct_weekly_flow.index, max_oct_weekly_flow['flow'], color)
+ax.set_xlabel('Years')
+ax.set_ylabel('Streamflow in cfs')
+ax.set_title('Max Streamflow for Week of 22-28 Oct')
+
+# Scatter Plot
+fig, ax = plt.subplots()
+ax.scatter(avg_oct_weekly_flow.index, avg_oct_weekly_flow['flow'])
+
+# %%
 # Plot #1: Line Plot
 ax = plt.axes()
 
