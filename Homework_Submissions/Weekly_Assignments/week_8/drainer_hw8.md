@@ -2,6 +2,11 @@
 ##### HWRS 501
 ##### 23 Oct 2023, Homework 8
 
+### Grade
+3/3: Nice work! Your graphs and explanations are really well done. 
+- In answer to your question. Whats happening is that on lines 80-83 you do the resampling on just the flow column so you end up with just one column for your output and pandas creates a pandas series out of that because its just one set of numbers and not a matrix anymore. You can either convert to a pandas dataframe (as you did on lines 93-95) or if you know its a series you can get the data out of it using '.values' I'll try to remember to talk about this in class tomorrow but remind me if not. 
+###
+
 1. Forecast Summary: This week I tried using a bunch of different averages to see what made sense based on the most recent flow. I incorporated the average flow for the past week into my calculation for the 1-week forecast of 102 cfs, which follows the most recent trend of weekly averages for the month of October. I then incorporated the 3-week average for the rest of the month with the average flow in Nov, since we're getting close to the new month. After tweaking with percentages to make it closer to the upward trend, I came up with a 2-week forecast of 110 cfs.
 2. Plot Images:
    - This is a plot of the monthly averages of 2023 to get an idea of the overall trend. Shows the flow pretty much tanking toward the end of the year...so my forecasts should be close to current observed.
