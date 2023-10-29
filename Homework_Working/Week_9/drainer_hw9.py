@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 
 # %%
 # Set the file name & path and read data
-filename = '../../data/streamflow_week8.txt'
+filename = '../../data/streamflow_week9.txt'
 filepath = os.path.join('data', filename)
 print(os.getcwd())
 print(filepath)
 
-filepath = '../../data/streamflow_week8.txt'
+filepath = '../../data/streamflow_week9.txt'
 
 # Read the data into a pandas dataframe
 data = pd.read_table(filepath, sep='\t', skiprows=31,
@@ -23,8 +23,21 @@ data = pd.read_table(filepath, sep='\t', skiprows=31,
 
 
 # %%
-# Set datetime as the index
-data = data.set_index('datetime')
+# Function
+
+def calc_wkly_mean(dataframe, data_col, index_col, start_date, end_date):
+    dataframe = dataframe.set_index(index_col)  # Set the dataframe index
+    df = dataframe[start_date:end_date]  # Filter data based on dates input
+    wkly_mean = df.resample('W').mean(data_col)  # Calculate mean from date inputs
+    return wkly_mean
+
+# %%
+# Set variables for function
+
+calc_wkly_mean('data', 'flow', 'datetime', '2023-10-01', '2023-10-28')
+
+
+
 
 # %%
 # Calculate Monthly Avg Flow for 2023
@@ -104,7 +117,7 @@ x_values_subplot1 = oct_recent_max.index.day
 x_values_subplot2 = nov_recent_max.index.day
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(
-    10, 4), sharey=True)  # 1 row, 2 columns
+    12, 4), sharey=True)  # 1 row, 2 columns
 ax1.plot(oct_recent_max['flow'], color='r', label='Weekly Max')
 ax1.plot(oct_recent_min['flow'], color='b', label='Weekly Min')
 ax1.plot(oct_recent_avg['flow'], color='k', label='Weekly Avg')
@@ -128,9 +141,9 @@ ax2.legend()
 
 ####################
 # Get Weekly Data
-monthly_data = data['2023-09-25':'2023-10-22']
-last_week = data['2023-10-15':'2023-10-21']
-last_3weeks = data['2023-10-01':'2023-10-21']
+monthly_data = data['2023-09-25':'2023-10-28']
+last_week = data['2023-10-22':'2023-10-28']
+last_3weeks = data['2023-10-08':'2023-10-28']
 oct_means = oct_wmean['flow'].mean()
 nov_means = nov_wmean['flow'].mean()
 
@@ -148,7 +161,7 @@ week2_fcst = int(
 # Plot Data with Avg
 fix, ax = plt.subplots()
 ax.plot(last_3weeks['flow'], color='orange', label='Observed Flow')
-ax.plot(wmean_flow['2023-09-25':'2023-10-22'],
+ax.plot(wmean_flow['2023-10-08':'2023-10-29'],
         color='gray', label='Weekly Mean')
 ax.plot(hline=last_week_avg)
 ax.plot(hline=last_3weeks_avg)
