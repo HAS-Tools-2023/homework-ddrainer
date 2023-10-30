@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # %%
-# Set the file name & path and read data
+# Set the file name, path, read data, and set index
 filename = '../../data/streamflow_week9.txt'
 filepath = os.path.join('data', filename)
 print(os.getcwd())
@@ -21,38 +21,135 @@ data = pd.read_table(filepath, sep='\t', skiprows=31,
                             'datetime', 'flow', 'code'],
                      parse_dates=['datetime'])
 
+# Set datetime as the index
+data = data.set_index('datetime')
 
 # %%
-# Function
+# Define Functions
+# Mean Flow Function
+# Inputs required:
+#       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
+#       data_col, start_date, and end_date for calc
 
-def calc_wkly_mean(dataframe, data_col, index_col, start_date, end_date):
-    dataframe = dataframe.set_index(index_col)  # Set the dataframe index
+
+def calc_mean(dataframe, period, data_col, start_date, end_date):
     df = dataframe[start_date:end_date]  # Filter data based on dates input
-    wkly_mean = df.resample('W').mean(data_col)  # Calculate mean from date inputs
-    return wkly_mean
+    mean_flow = df.resample(period).mean(data_col)  # Calculate from input
+    return mean_flow
+
+# Max Flow Function
+# Inputs required:
+#       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
+#       data_col, start_date, and end_date for calc
+
+
+def calc_max(dataframe, period, data_col, start_date, end_date):
+    df = dataframe[start_date:end_date]  # Filter data based on dates input
+    max_flow = df.resample(period).max(data_col)  # Calculate from input
+    return max_flow
+
+# Min Flow Function
+# Inputs required:
+#       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
+#       data_col, start_date, and end_date for calc
+
+
+def calc_min(dataframe, period, data_col, start_date, end_date):
+    df = dataframe[start_date:end_date]  # Filter data based on dates input
+    min_flow = df.resample(period).max(data_col)  # Calculate from input
+    return min_flow
 
 # %%
-# Set variables for function
+# Test Calculate
 
-calc_wkly_mean('data', 'flow', 'datetime', '2023-10-01', '2023-10-28')
+# Monthly Tests
+# Set variables
 
 
+time_period = 'M'
+start_date = '2023-01-01'
+end_date = '2023-10-28'
 
+calc_mean(data, time_period, 'flow', start_date, end_date)
+calc_max(data, time_period, 'flow', start_date, end_date)
+calc_min(data, time_period, 'flow', start_date, end_date)
+
+# Weekly Tests
+# Set variables
+
+time_period = 'W'
+
+calc_mean(data, time_period, 'flow', start_date, end_date)
+calc_max(data, time_period, 'flow', start_date, end_date)
+calc_min(data, time_period, 'flow', start_date, end_date)
 
 # %%
-# Calculate Monthly Avg Flow for 2023
+# Plot Monthly Average flow for selected time
 
-monthly_avg = data['flow'].resample('M').max()
-monthly_avg = pd.DataFrame(monthly_avg)
-monthly_avg_2023 = monthly_avg[monthly_avg.index.year == 2023]
+mean_period = 'M'  # Set period to calculate mean for
+
+mean_plot_data_2023 = calc_mean(data, mean_period, 'flow', '2023-01-01',
+                                '2023-10-28')
+mean_plot_data_2022 = calc_mean(data, mean_period, 'flow', '2022-01-01',
+                                '2022-10-31')
+mean_plot_data_2021 = calc_mean(data, mean_period, 'flow', '2021-01-01',
+                                '2021-12-31')
+mean_plot_data_2020 = calc_mean(data, mean_period, 'flow', '2020-01-01',
+                                '2020-12-31')
+mean_plot_data_2019 = calc_mean(data, mean_period, 'flow', '2019-01-01',
+                                '2019-12-31')
+mean_plot_data_2018 = calc_mean(data, mean_period, 'flow', '2018-01-01',
+                                '2018-12-31')
+
+# Plot all monthly averages from 2018-2023
 
 fig, ax = plt.subplots()
-ax.plot(monthly_avg_2023['flow'], color='r', label='Monthly Avg')
-ax.set(title="Monthly Avg Flow", xlabel="Date",
-       ylabel="Flow [cfs]", yscale='log')
-plt.xticks(rotation=45)
-plt.grid()
-plt.legend()
+ax.plot(mean_plot_data_2023['flow'], color='black', label='2023')
+ax.plot(mean_plot_data_2022['flow'], color='green', label='2022')
+ax.plot(mean_plot_data_2021['flow'], color='yellow', label='2021')
+ax.plot(mean_plot_data_2020['flow'], color='red', label='2020')
+ax.plot(mean_plot_data_2019['flow'], color='purple', label='2019')
+ax.plot(mean_plot_data_2018['flow'], color='orange', label='2018')
+ax.set(title="Monthly Avg Flow 2018-2023", xlabel="Date",
+       ylabel="Flow [cfs]")  # Set plot attributes
+ax.set_facecolor('gray')  # Set the background color
+plt.xticks(rotation=45)  # Rotate the x-axis labels 45°
+plt.grid()  # Turn on the grid
+plt.legend()  # Plot the legend
+
+# %%
+# Plot Weekly Average flow for selected time
+
+mean_period = 'W'  # Set period to calculate mean for
+
+mean_plot_data_2023 = calc_mean(data, mean_period, 'flow', '2023-01-01',
+                                '2023-10-28')
+mean_plot_data_2022 = calc_mean(data, mean_period, 'flow', '2022-01-01',
+                                '2022-10-31')
+mean_plot_data_2021 = calc_mean(data, mean_period, 'flow', '2021-01-01',
+                                '2021-12-31')
+mean_plot_data_2020 = calc_mean(data, mean_period, 'flow', '2020-01-01',
+                                '2020-12-31')
+mean_plot_data_2019 = calc_mean(data, mean_period, 'flow', '2019-01-01',
+                                '2019-12-31')
+mean_plot_data_2018 = calc_mean(data, mean_period, 'flow', '2018-01-01',
+                                '2018-12-31')
+
+# Plot all weekly averages from 2018-2023
+
+fig, ax = plt.subplots()
+ax.plot(mean_plot_data_2023['flow'], color='black', label='2023')
+ax.plot(mean_plot_data_2022['flow'], color='green', label='2022')
+ax.plot(mean_plot_data_2021['flow'], color='yellow', label='2021')
+ax.plot(mean_plot_data_2020['flow'], color='red', label='2020')
+ax.plot(mean_plot_data_2019['flow'], color='purple', label='2019')
+ax.plot(mean_plot_data_2018['flow'], color='orange', label='2018')
+ax.set(title="Weekly Avg Flow 2018-2023", xlabel="Date",
+       ylabel="Flow [cfs]")  # Set plot attributes
+ax.set_facecolor('gray')  # Set the background color
+plt.xticks(rotation=45)  # Rotate the x-axis labels 45°
+plt.grid()  # Turn on the grid
+plt.legend()  # Plot the legend
 
 # %%
 # Get Weekly Mean Flow for Oct
@@ -60,11 +157,14 @@ plt.legend()
 # Set variables
 year = 2020
 month = 10
+start_date = '1989-01-01'
+end_date = '2023-10-28'
+
 
 # Work some python magic--calculate min, max, mean for weeks in Oct
-wmax_flow = data['flow'].resample('W').max()
-wmin_flow = data['flow'].resample('W').min()
-wmean_flow = data['flow'].resample('W').mean()
+wmax_flow = calc_max(data, time_period, 'flow', start_date, end_date)
+wmin_flow = calc_min(data, time_period, 'flow', start_date, end_date)
+wmean_flow = calc_mean(data, time_period, 'flow', start_date, end_date)
 
 oct_wmax = wmax_flow[wmax_flow.index.month == month]
 oct_wmin = wmin_flow[wmin_flow.index.month == month]
@@ -74,7 +174,6 @@ oct_recent_max = oct_wmax[oct_wmax.index.year >= year]
 oct_recent_min = oct_wmin[oct_wmin.index.year >= year]
 oct_recent_avg = oct_wmean[oct_wmean.index.year >= year]
 
-# oct_recent_max.reset_index()
 oct_recent_max = pd.DataFrame(oct_recent_max)
 oct_recent_min = pd.DataFrame(oct_recent_min)
 oct_recent_avg = pd.DataFrame(oct_recent_avg)
@@ -87,11 +186,7 @@ oct_wmin = pd.DataFrame(oct_wmin)
 year = 2020
 month = 11
 
-# Work some python magic--calculate min, max, mean for weeks in Oct
-wmax_flow = data['flow'].resample('W').max()
-wmin_flow = data['flow'].resample('W').min()
-wmean_flow = data['flow'].resample('W').mean()
-
+# Work some python magic--calculate min, max, mean for weeks in Nov
 nov_wmax = wmax_flow[wmax_flow.index.month == month]
 nov_wmin = wmin_flow[wmin_flow.index.month == month]
 nov_wmean = wmean_flow[wmean_flow.index.month == month]
@@ -100,7 +195,6 @@ nov_recent_max = nov_wmax[nov_wmax.index.year >= year]
 nov_recent_min = nov_wmin[nov_wmin.index.year >= year]
 nov_recent_avg = nov_wmean[nov_wmean.index.year >= year]
 
-# oct_recent_max.reset_index()
 nov_recent_max = pd.DataFrame(nov_recent_max)
 nov_recent_min = pd.DataFrame(nov_recent_min)
 nov_recent_avg = pd.DataFrame(nov_recent_avg)
@@ -117,7 +211,7 @@ x_values_subplot1 = oct_recent_max.index.day
 x_values_subplot2 = nov_recent_max.index.day
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(
-    12, 4), sharey=True)  # 1 row, 2 columns
+    10, 4), sharey=True)  # 1 row, 2 columns
 ax1.plot(oct_recent_max['flow'], color='r', label='Weekly Max')
 ax1.plot(oct_recent_min['flow'], color='b', label='Weekly Min')
 ax1.plot(oct_recent_avg['flow'], color='k', label='Weekly Avg')
@@ -127,6 +221,8 @@ ax1.grid(True)
 ax1.set_xticklabels(x_values_subplot1, rotation=45)
 ax1.legend()
 
+
+# Data for the second subplot
 ax2.plot(nov_recent_max['flow'], color='orange', label='Weekly Max')
 ax2.plot(nov_recent_min['flow'], color='purple', label='Weekly Min')
 ax2.plot(nov_recent_avg['flow'], color='green', label='Weekly Avg')
@@ -141,9 +237,9 @@ ax2.legend()
 
 ####################
 # Get Weekly Data
-monthly_data = data['2023-09-25':'2023-10-28']
-last_week = data['2023-10-22':'2023-10-28']
-last_3weeks = data['2023-10-08':'2023-10-28']
+monthly_data = data['2023-09-25':'2023-10-22']
+last_week = data['2023-10-15':'2023-10-21']
+last_3weeks = data['2023-10-01':'2023-10-21']
 oct_means = oct_wmean['flow'].mean()
 nov_means = nov_wmean['flow'].mean()
 
@@ -152,11 +248,8 @@ last_week_avg = last_week['flow'].mean()
 last_3weeks_avg = last_3weeks['flow'].mean()
 
 # Make a Forecast
-week1_fcst = int(
-    oct_means - (monthly_data.loc['2023-10-21', 'flow']) + last_week_avg*0.61)
-week2_fcst = int(
-    nov_means - (monthly_data.loc['2023-10-21', 'flow']) +
-    last_3weeks_avg*0.15)
+week1_fcst = int(oct_means - (monthly_data.loc['2023-10-21','flow']) + last_week_avg*0.61)
+week2_fcst = int(nov_means - (monthly_data.loc['2023-10-21','flow']) + last_3weeks_avg*0.15)
 
 # Plot Data with Avg
 fix, ax = plt.subplots()
