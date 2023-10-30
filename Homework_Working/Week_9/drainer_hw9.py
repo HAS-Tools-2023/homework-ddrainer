@@ -157,14 +157,11 @@ plt.legend()  # Plot the legend
 # Set variables
 year = 2020
 month = 10
-start_date = '1989-01-01'
-end_date = '2023-10-28'
-
 
 # Work some python magic--calculate min, max, mean for weeks in Oct
-wmax_flow = calc_max(data, time_period, 'flow', start_date, end_date)
-wmin_flow = calc_min(data, time_period, 'flow', start_date, end_date)
-wmean_flow = calc_mean(data, time_period, 'flow', start_date, end_date)
+wmax_flow = data['flow'].resample('W').max()
+wmin_flow = data['flow'].resample('W').min()
+wmean_flow =data['flow'].resample('W').mean()
 
 oct_wmax = wmax_flow[wmax_flow.index.month == month]
 oct_wmin = wmin_flow[wmin_flow.index.month == month]
@@ -174,6 +171,7 @@ oct_recent_max = oct_wmax[oct_wmax.index.year >= year]
 oct_recent_min = oct_wmin[oct_wmin.index.year >= year]
 oct_recent_avg = oct_wmean[oct_wmean.index.year >= year]
 
+#oct_recent_max.reset_index()
 oct_recent_max = pd.DataFrame(oct_recent_max)
 oct_recent_min = pd.DataFrame(oct_recent_min)
 oct_recent_avg = pd.DataFrame(oct_recent_avg)
@@ -186,7 +184,11 @@ oct_wmin = pd.DataFrame(oct_wmin)
 year = 2020
 month = 11
 
-# Work some python magic--calculate min, max, mean for weeks in Nov
+# Work some python magic--calculate min, max, mean for weeks in Oct
+wmax_flow = data['flow'].resample('W').max()
+wmin_flow = data['flow'].resample('W').min()
+wmean_flow =data['flow'].resample('W').mean()
+
 nov_wmax = wmax_flow[wmax_flow.index.month == month]
 nov_wmin = wmin_flow[wmin_flow.index.month == month]
 nov_wmean = wmean_flow[wmean_flow.index.month == month]
@@ -195,6 +197,7 @@ nov_recent_max = nov_wmax[nov_wmax.index.year >= year]
 nov_recent_min = nov_wmin[nov_wmin.index.year >= year]
 nov_recent_avg = nov_wmean[nov_wmean.index.year >= year]
 
+#oct_recent_max.reset_index()
 nov_recent_max = pd.DataFrame(nov_recent_max)
 nov_recent_min = pd.DataFrame(nov_recent_min)
 nov_recent_avg = pd.DataFrame(nov_recent_avg)
@@ -210,24 +213,21 @@ nov_wmin = pd.DataFrame(nov_wmin)
 x_values_subplot1 = oct_recent_max.index.day
 x_values_subplot2 = nov_recent_max.index.day
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(
-    10, 4), sharey=True)  # 1 row, 2 columns
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4), sharey=True)  # 1 row, 2 columns
 ax1.plot(oct_recent_max['flow'], color='r', label='Weekly Max')
 ax1.plot(oct_recent_min['flow'], color='b', label='Weekly Min')
 ax1.plot(oct_recent_avg['flow'], color='k', label='Weekly Avg')
 ax1.set(title="Oct Weekly Flow Since 2020", xlabel="Date",
-        ylabel="Flow [cfs]", ylim=(0, 300))
+       ylabel="Flow [cfs]", ylim=(0,300))
 ax1.grid(True)
 ax1.set_xticklabels(x_values_subplot1, rotation=45)
 ax1.legend()
 
-
-# Data for the second subplot
 ax2.plot(nov_recent_max['flow'], color='orange', label='Weekly Max')
 ax2.plot(nov_recent_min['flow'], color='purple', label='Weekly Min')
 ax2.plot(nov_recent_avg['flow'], color='green', label='Weekly Avg')
 ax2.set(title="Nov Weekly Flow Since 2020", xlabel="Date",
-        ylabel="Flow [cfs]")
+       ylabel="Flow [cfs]")
 ax2.grid(True)
 ax2.set_xticklabels(x_values_subplot2, rotation=45)
 ax2.legend()
@@ -237,57 +237,48 @@ ax2.legend()
 
 ####################
 # Get Weekly Data
-monthly_data = data['2023-09-25':'2023-10-22']
-last_week = data['2023-10-15':'2023-10-21']
-last_3weeks = data['2023-10-01':'2023-10-21']
+monthly_data = data['2023-10-01':'2023-10-28']
+last_week = data['2023-10-22':'2023-10-28']
+last_4weeks = data['2023-10-01':'2023-10-28']
 oct_means = oct_wmean['flow'].mean()
 nov_means = nov_wmean['flow'].mean()
 
 # Calculate Avgs
 last_week_avg = last_week['flow'].mean()
-last_3weeks_avg = last_3weeks['flow'].mean()
+last_4weeks_avg = last_4weeks['flow'].mean()
 
 # Make a Forecast
-week1_fcst = int(oct_means - (monthly_data.loc['2023-10-21','flow']) + last_week_avg*0.61)
-week2_fcst = int(nov_means - (monthly_data.loc['2023-10-21','flow']) + last_3weeks_avg*0.15)
+week1_fcst = int(oct_means - (monthly_data.loc['2023-10-28','flow']) + last_week_avg*0.80)
+week2_fcst = int(nov_means - (monthly_data.loc['2023-10-28','flow']) + last_4weeks_avg*0.20)
 
 # Plot Data with Avg
 fix, ax = plt.subplots()
-ax.plot(last_3weeks['flow'], color='orange', label='Observed Flow')
-ax.plot(wmean_flow['2023-10-08':'2023-10-29'],
-        color='gray', label='Weekly Mean')
+ax.plot(last_4weeks['flow'], color='orange', label='Observed Flow')
+ax.plot(wmean_flow['2023-10-01':'2023-10-29'], color='gray', label='Weekly Mean')
 ax.plot(hline=last_week_avg)
-ax.plot(hline=last_3weeks_avg)
+ax.plot(hline=last_4weeks_avg)
 ax.plot(hline=week1_fcst)
 ax.plot(hline=week2_fcst)
 
 # Set limits for horizontal line for avgs
 x_min, x_max = ax.get_xlim()
 horizontal_value = last_week_avg
-horizontal_value2 = last_3weeks_avg
+horizontal_value2 = last_4weeks_avg
 horizontal_value3 = week1_fcst
 horizontal_value4 = week2_fcst
 
 # Plot horizontal Line Avg
-ax.hlines(horizontal_value, x_min, x_max,
-          color='red', linestyle='--', linewidth=2)
-ax.text(x_max, horizontal_value, 'Last Week Avg',
-        va='center', ha='left', color='red')
+ax.hlines(horizontal_value, x_min, x_max, color='red', linestyle='--', linewidth=2)
+ax.text(x_max, horizontal_value, 'Last Week Avg', va='center', ha='left', color='red')
 
-ax.hlines(horizontal_value2, x_min, x_max,
-          color='purple', linestyle='--', linewidth=2)
-ax.text(x_max, horizontal_value2, '3-Week Avg',
-        va='center', ha='left', color='purple')
+ax.hlines(horizontal_value2, x_min, x_max, color='purple', linestyle='--', linewidth=2)
+ax.text(x_max, horizontal_value2, '3-Week Avg', va='center', ha='left', color='purple')
 
-ax.hlines(horizontal_value3, x_min, x_max,
-          color='green', linestyle='dotted', linewidth=2)
-ax.text(x_max, horizontal_value3, '1-Week Fcst',
-        va='center', ha='left', color='green')
+ax.hlines(horizontal_value3, x_min, x_max, color='green', linestyle='dotted', linewidth=2)
+ax.text(x_max, horizontal_value3, '1-Week Fcst', va='center', ha='left', color='green')
 
-ax.hlines(horizontal_value4, x_min, x_max,
-          color='blue', linestyle='dotted', linewidth=2)
-ax.text(x_max, horizontal_value4, '2-Week Fcst',
-        va='center', ha='left', color='blue')
+ax.hlines(horizontal_value4, x_min, x_max, color='blue', linestyle='dotted', linewidth=2)
+ax.text(x_max, horizontal_value4, '2-Week Fcst', va='center', ha='left', color='blue')
 
 # Set Graph Attributes
 ax.set(title="October Observed Flow", xlabel="Date", ylabel="Flow[cfs]")
@@ -297,9 +288,7 @@ plt.legend(loc='lower right')
 
 
 # Print My Forecast and a Message
-print('My week 1 forecast is ', week1_fcst,
-      'cfs. Thank you for doing my work for me!')
-print('My week 2 forecast is ', week2_fcst,
-      "cfs. You're great at this, I should pay you!")
+print('My week 1 forecast is ', week1_fcst, 'cfs. Thank you for doing my work for me!')
+print('My week 2 forecast is ', week2_fcst, "cfs. You're great at this, I should pay you!")
 
 # %%
