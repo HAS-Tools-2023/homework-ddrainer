@@ -26,6 +26,27 @@ data = data.set_index('datetime')
 
 # %%
 # Define Functions
+
+
+"""There are three functions below that calculate the min, mean,
+and max of a specfied column of a dataframe.
+    
+    Parameters
+    ----------
+    input :
+        dataframe = the specified dataframe to use for data
+        period = either weekly (W), monthly (M), or yearly (Y)
+        data_col = the column of interest that you want to use to calc
+        start_date = date format MM-DD-YYYY for start date of period
+        end_date = date format MM-DD-YYYY for end date of period
+    
+    Returns
+    ------
+    output : type dataframe
+        This returns the mean over the course of the specified period in 
+        a new dataframe.
+"""
+
 # Mean Flow Function
 # Inputs required:
 #       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
@@ -41,7 +62,6 @@ def calc_mean(dataframe, period, data_col, start_date, end_date):
 # Inputs required:
 #       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
 #       data_col, start_date, and end_date for calc
-
 
 def calc_max(dataframe, period, data_col, start_date, end_date):
     df = dataframe[start_date:end_date]  # Filter data based on dates input
