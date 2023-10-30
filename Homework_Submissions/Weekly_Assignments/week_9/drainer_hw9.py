@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 
 # %%
 # Set the file name, path, read data, and set index
-filename = '../../data/streamflow_week9.txt'
+filename = '../../../data/streamflow_week9.txt'
 filepath = os.path.join('data', filename)
 print(os.getcwd())
 print(filepath)
 
-filepath = '../../data/streamflow_week9.txt'
+filepath = '../../../data/streamflow_week9.txt'
 
 # Read the data into a pandas dataframe
 data = pd.read_table(filepath, sep='\t', skiprows=31,
@@ -272,7 +272,7 @@ horizontal_value2 = last_4weeks_avg
 horizontal_value3 = week1_fcst
 horizontal_value4 = week2_fcst
 
-# Plot horizontal Line Avg
+# Plot averages as h-lines for comparison
 ax.hlines(horizontal_value, x_min, x_max, color='red', linestyle='--',
           linewidth=2)
 ax.text(x_max, horizontal_value, 'Last Week Avg', va='center', ha='left',
@@ -283,6 +283,7 @@ ax.hlines(horizontal_value2, x_min, x_max, color='purple', linestyle='--',
 ax.text(x_max, horizontal_value2, '4-Week Avg', va='center', ha='left',
         color='purple')
 
+# Plot weekly forecasts as h-lines for comparison
 ax.hlines(horizontal_value3, x_min, x_max, color='green', linestyle='dotted',
           linewidth=2)
 ax.text(x_max, horizontal_value3, '1-Week Fcst', va='center', ha='left',
@@ -302,6 +303,6 @@ plt.legend(loc='lower right')
 
 # Print My Forecast and a Message
 print('My week 1 forecast is ', week1_fcst,
-      'cfs. Thank you for doing my work for me!')
-print('My week 2 forecast is ', week2_fcst, 'cfs.')
-print("You're great at this, I should pay you!")
+      'cfs. I am not good at this, but thank you for your assistance!')
+print("My week 2 forecast is", week2_fcst,
+      "cfs. You're so great at this, I should pay you!")
