@@ -3,10 +3,13 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-#from sklearn import datasets
-#from sklearn.linear_model import LinearRegression
 
-#%%
+
+
+
+# %%
+# Tuesday Exercises
+
 ### Exercise 1: 
 # Given the following dataframe:
 data = np.random.rand(4, 5)
@@ -25,19 +28,37 @@ def average_columns(my_array):
     return(col_mean)
 
 average_columns(data)
-
 # %%
 #define a function that can take the mean of a set of nubmers
 # and return one value
-def take_mean(some_numbers):
-    np.mean(some_numbers)
-    return one number
+"""Function to take the mean of an input of numbers,
+which can be a list of numbers, or an array, or just
+a part of an array
+"""
 
+def take_mean(some_numbers):
+    mean = np.mean(some_numbers)
+    return mean
+
+# Examples
+print(take_mean([10,10,10,7,10,5]))
+print(take_mean(data))
+print(take_mean(data[1]))
+print(take_mean(data[0,1]))
+print(take_mean(data[:,1]))
+
+# %%
 # write a for loop that will loop over each column of data, 
 # take the mean and store in array that has a number for each column
-output=np.zeros(5)
-for .. in ..
-    take_mean and store it in the right location 
+data = np.random.rand(4, 5)
+columns = data.shape[1]
+
+output = np.zeros(columns)
+
+for i in range(columns):
+    output[i] = np.mean(data[:, i])
+
+print(output)
 
 #%% Exercise two: regression analysis
 # For this exercise we will work with the
@@ -68,6 +89,7 @@ iris_df.loc['versicolor']
 
 species_mean = iris_df.groupby(iris_df.index).mean()
 
+print(species_mean)
 
 # %%
 # 4. Make a scatter plot of the `sepal length (cm)`
@@ -81,6 +103,7 @@ ax=versicolor_df.plot.scatter(x='petal length (cm)', y='sepal length (cm)',
                         marker='x')
 ax.set_title("Versicolor Sepal Length vs. Petal Length")
 
+# %%
 # 5.  Do the same plot for `setosa` and `virginica` all on the same figure. 
 # Color them 'tomato', 'darkcyan', and 'darkviolet', respectively. 
 # (BONUS: Try to write the code so you only need to type each iris name one time)
@@ -98,6 +121,9 @@ ax.scatter(setosa_df['petal length (cm)'], setosa_df['sepal length (cm)'],
 ax.scatter(virginica_df['petal length (cm)'], virginica_df['sepal length (cm)'],
                         marker='x', color='darkviolet')
 ax.set_title("Sepal Length vs. Petal Length")
+
+# Type each species one time
+
 
 # %%
 # 6. Write a function that will do 'ax.scatter' for a given iris type 
@@ -120,6 +146,3 @@ def plot_iris(species_data, color):
 plot_iris(versicolor_df, 'tomato')
 plot_iris(setosa_df, 'darkcyan')
 plot_iris(virginica_df, 'darkviolet')
-
-
-# %%
