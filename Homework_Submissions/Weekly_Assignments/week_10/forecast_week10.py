@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 
 # %%
 # Set the file name, path, read data, and set index
-filename = '../../data/streamflow_week10.txt'
+filename = '../../../data/streamflow_week10.txt'
 filepath = os.path.join('data', filename)
 print(os.getcwd())
 print(filepath)
 
-filepath = '../../data/streamflow_week10.txt'
+filepath = '../../../data/streamflow_week10.txt'
 
 # Read the data into a pandas dataframe
 data = pd.read_table(filepath, sep='\t', skiprows=31,
