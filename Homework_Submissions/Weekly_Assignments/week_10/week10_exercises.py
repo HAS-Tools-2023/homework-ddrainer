@@ -297,7 +297,7 @@ daymet_df = pd.read_csv('daymet.csv', index_col='date', parse_dates=['date'])
 # 2.2: Explore this dataset and report what variables
 # it contains, what date ranges are covered and the frequency of the data.
 
-daymet_df.info()  # gives you everything includind date range
+daymet_df.info()  # everything with dates from index(9/25/92-9/25/22)
 daymet_df.columns  # gives you all column names
 daymet_df.index  # gives you the index values
 
