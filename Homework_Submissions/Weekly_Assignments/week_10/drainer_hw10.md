@@ -2,6 +2,10 @@
 ## HWRS 501
 ## 6 Nov 2023, Homework 10
 
+### Grade
+3/3: Great job! Nice find on the 'f-string' option that was one I hadn't used before. Functions, loops and implicit looping can be very confusing and we'll try to keep practicing with them throughout the rest of class too. 
+
+
 1. My completed exercises are in the week10_exercises.py script.
    
 2. (1). What I learned: I keep building on my knowledge about how to access specific parts of dataframes and arrays, so the practice with that is really helping. I usually end up with a dataframe that is not what I expected at first, so I try and run the code line by line to see what I'm missing or where I went wrong. The fill function for graphs is really neat, and after some much needed help I understand it much better. In trying to complete the final exercise, I found something called an "f-string" from doing some searching and it seems to be pretty helpful when trying to filter things. It's not super intuitive, but seems to be somewhat of a shortcut. I'll make sure to keep practicing with that and other ways to filter data.
