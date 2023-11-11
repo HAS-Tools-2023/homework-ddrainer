@@ -6,6 +6,8 @@ import numpy as np
 import geopandas as gpd
 import fiona
 from shapely.geometry import Point
+from matplotlib.ticker import ScalarFormatter
+
 
 # %%
 # Exercise 1: 
@@ -28,7 +30,7 @@ shapefile2.head()
 
 shapefile1.columns
 shapefile2.columns
-gages.shape #seeing how many entries there are
+shapefile1.shape #seeing how many entries there are
 
 # 3. Plot each dataset. You can plot them separately but also try plotting subsets and plotting them on top of each other. 
 
@@ -72,7 +74,10 @@ point_list2 = np.array([[-112.383056, 33.535],
 
 #make these into spatial features
 point_geom = [Point(xy) for xy in point_list]
+point_geom
+
 point_geom2 = [Point(xy) for xy in point_list2]
+point_geom2
 
 #mape a dataframe of these points
 point_df = gpd.GeoDataFrame(point_geom, columns=['geometry'],
@@ -86,6 +91,39 @@ point_df2 = gpd.GeoDataFrame(point_geom2, columns=['geometry'],
 fig, ax = plt.subplots(figsize=(10, 10))
 HUC8.plot(ax=ax)
 shapefile2.plot(ax=ax, color='green', alpha=0.6)
-point_df.plot(ax=ax, color='red', marker='^')
-ax.set_title("HUC8 Boundaries")
+point_df.plot(ax=ax, color='red', marker='^', label='Cities')
+point_df2.plot(ax=ax, color='yellow', marker='*', label='Military Bases')
+#ax.set_title("HUC8 Boundaries")
+
+# Setup x y axes with labels and add graticules
+ax.set(xlabel="Longitude (Degrees)", ylabel="Latitude (Degrees)",
+       title="Arizona Map and Watershed Boundaries\n Units: Degrees - Latitude / Longitude")
+ax.set_axisbelow(True)
+ax.yaxis.grid(color='gray', linestyle='dashed')
+ax.xaxis.grid(color='gray', linestyle='dashed')
+ax.legend()
 plt.show()
+
+# Reproject the data
+HUC8_robin = HUC8.to_crs('+proj=robin')
+shapefile2_robin = shapefile2.to_crs('+proj=robin')
+point_df_robin = point_df.to_crs('+proj=robin')
+point_df2_robin = point_df2.to_crs('+proj=robin')
+
+# Plot the data
+fig, ax = plt.subplots(figsize=(12, 8))
+
+HUC8_robin.plot(ax=ax,
+                      color='g')
+shapefile2_robin.plot(ax=ax, color='b', alpha=0.4)
+point_df_robin.plot(ax=ax, color='red', marker='^', label='Cities')
+point_df2_robin.plot(ax=ax, color='yellow', marker='*', label='Military Bases')
+
+ax.set(title="Robinson Coordinate Reference System",
+       xlabel="X Coordinates (meters)",
+       ylabel="Y Coordinates (meters)")
+
+for axis in [ax.xaxis, ax.yaxis]:
+    formatter = ScalarFormatter()
+    formatter.set_scientific(False)
+    axis.set_major_formatter(formatter)
