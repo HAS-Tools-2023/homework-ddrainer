@@ -52,11 +52,32 @@ and max of a specfied column of a dataframe.
 #       dataframe, period (Weekly = 'W', Monthly = 'M', Yearly = 'Y'),
 #       data_col, start_date, and end_date for calc
 
+# LC- Love the functions! You could also create one function that returns all three things (min max and mean) to simplify this a bit
 
 def calc_mean(dataframe, period, data_col, start_date, end_date):
+    """This function calculates mean,of a specfied column of a dataframe.
+    
+    Parameters
+    ----------
+    input :
+        dataframe = the specified dataframe to use for data
+        period = either weekly (W), monthly (M), or yearly (Y)
+        data_col = the column of interest that you want to use to calc
+        start_date = date format MM-DD-YYYY for start date of period
+        end_date = date format MM-DD-YYYY for end date of period
+    
+    Returns
+    ------
+    output : type dataframe
+        This returns the mean over the course of the specified period in 
+        a new dataframe.
+"""
     df = dataframe[start_date:end_date]  # Filter data based on dates input
     mean_flow = df.resample(period).mean(data_col)  # Calculate from input
     return mean_flow
+
+#LC - since I added the doc strings inside the function you can now get help on your function like this: 
+print(help(calc_mean))
 
 # Max Flow Function
 # Inputs required:
@@ -85,6 +106,7 @@ def calc_min(dataframe, period, data_col, start_date, end_date):
 # Monthly Tests
 # Set variables
 
+#LC - This section could use some comments to explain what you are doing and why
 
 time_period = 'M'
 start_date = '2023-01-01'
@@ -108,6 +130,9 @@ calc_min(data, time_period, 'flow', start_date, end_date)
 
 mean_period = 'M'  # Set period to calculate mean for
 
+#LC - You could create the dates here as variables just changing the year like this: 
+# year = 2023
+# start = str(year)+'-01-01'
 mean_plot_data_2023 = calc_mean(data, mean_period, 'flow', '2023-01-01',
                                 '2023-10-28')
 mean_plot_data_2022 = calc_mean(data, mean_period, 'flow', '2022-01-01',
@@ -206,6 +231,8 @@ oct_wmin = pd.DataFrame(oct_wmin)
 # Set variables
 year = 2020
 month = 11
+
+#LC -- note that these steps and the block above are very repetative and would also make sense as functions
 
 # Filter for the month of Nov
 nov_wmax = wmax_flow[wmax_flow.index.month == month]
