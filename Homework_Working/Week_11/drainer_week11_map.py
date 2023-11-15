@@ -80,7 +80,21 @@ rivers_clipped.plot(ax=ax, color='cyan', linewidth=2, linestyle='dotted',
                     label='Major Rivers')
 point_df.plot(ax=ax, color='red', marker='*', markersize=100,
               label='Points of Interest')
-ctx.add_basemap(ax, source=ctx.providers.OpenTopoMap,
-                crs=arizona.crs)  # Add Topo basemap
+#ctx.add_basemap(ax, source=ctx.providers.OpenTopoMap,
+#                crs=arizona.crs)  # Add Topo basemap
+
+ctx.add_basemap(ax, source=ctx.providers.OpenRailwayMap,
+                crs=arizona.crs)  # Add Railway basemap
+
+#ctx.add_basemap(ax, crs=arizona.crs)  # Add default basemap
+
 ax.set(title='AZ Watershed', xlabel='Longitude', ylabel='Latitude')
 ax.legend()
+
+
+# %%
+# Class Notes from 11/14/2023
+
+# Use zorder to help layer things: (ax=ax, zorder=1, color = 'lightgreen')
+
+# Use matplotlib.patches sub package to crate legends for polygons
