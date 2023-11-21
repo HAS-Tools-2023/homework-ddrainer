@@ -2,6 +2,15 @@
 ### HWRS 501
 ### 20 Nov 2023, Homework 12
 
+### Grade
+3/3: Nice job. Cool to see you are doing correlations in your code I think others might like to see this too. Also good to see that Daymet is back up and running again!
+
+- agreed on your statitical comment. I really wish we could get into more of that in this class but we have so much other ground to cover it's not possible. 
+- For the julian dates I think something like this is what you are looking for:https://rafatieppo.github.io/post/2018_12_01_juliandate/ 
+- For overlaying with different scales you want to use a secondary y axis. https://matplotlib.org/stable/gallery/subplots_axes_and_figures/secondary_axis.html#sphx-glr-gallery-subplots-axes-and-figures-secondary-axis-py (note the examples here are x axis but it works for y too)
+
+###
+
 1. Forecast Summary: I cleaned up my forecast script a little bit and got rid of some unnecessary things. I used two different APIs to grab out some precipitation data to try and determine a correlation between that and streamflow. For this past year, accumulated precipiation hasn't really increased a lot in the fall, yet streamflow continues to increase. Then I plotted precipiation data for the previous couple of years ad compared it with the monthly and weekly average streamflow and there's definitely at least some relationship between precipitation and streamflow at Camp Verde. So, I decided to continue to increase my streamflow for my forecast for the next couple of weeks, making some tweaks based on recent observed flow and the mean flow over the past month and past week. 
    
 2. There are 3 datasets I used, but all of them are precipitation data. For the two datasets from Daymet, I just used the web API builder to build the entire URL, and then accessed it that way. For the second year that I pulled data, I just changed the dates in the URL reather than going through the request again.
