@@ -19,6 +19,9 @@ from datetime import datetime, timedelta
 
 fcst_date = '2023-12-04'
 
+# User Input for USGS site code
+site = '09506000'  # Camp Verde
+
 # Define all functions to be used in code
 
 
@@ -113,7 +116,6 @@ weekly_end = sub_dates(fcst_date, 8)  # Weekly end date
 
 # Get last year's worth of data from Rest API for streamflow using
 # function & save data to variable 'data'
-site = '09506000'  # USGS site code for Camp Verde
 start = sub_dates(monthly_start, 365)  # Start date for streamflow data
 end = weekly_end  # End date for streamflow data
 

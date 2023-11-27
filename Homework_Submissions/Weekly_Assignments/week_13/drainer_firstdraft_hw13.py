@@ -1,59 +1,33 @@
+# %%
 # Name: David Drainer
 # Date: 11/27/2023
 # Title: Homework 13
-# Note that there are 4 instances where the linter doesn't like my
-# indentation on functions. I have tried to fix it but it keeps giving
-# me errors no matter which way I indent them. I also can't seem to get
-# rid of the indent error on line 195.
 
-# %%
 # Import packages
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from datetime import datetime, timedelta
 
-# %%
 # User Input Forecast Date for week 1 in YYYY-MM-DD format
 # Forecast Date for week 2 will be calculated based on this date
 
 fcst_date = '2023-12-04'
 
-# Define all functions to be used in code
+# Variables for API query with two others to test other stations
+# site = '09506000'  # Camp Verde
+# site = '07146800'  # WB Walnut R NR EL Dorado, KS
+site = '02171500'  # Santee River Near Pineville, SC
+start = '2022-11-26'
+end = '2023-11-25'
 
+# Variables for Observed Data Plot
+monthly_start = '2023-10-25'
+monthly_end = '2023-11-25'
+weekly_start = '2023-11-19'
+weekly_end = '2023-11-25'
 
-def add_dates(input_date, num_days):
-        """
-        Add a specified number of days to a given date.
-
-        Parameters:
-        input_date (str): The input date in 'YYYY-MM-DD' format.
-        num_days (int): The number of days to add.
-
-        Returns:
-        str: The resulting date after adding the specified number of days in
-        'YYYY-MM-DD' format.
-        """
-        input_date = datetime.strptime(fcst_date, '%Y-%m-%d')
-        output_date = input_date + timedelta(days=num_days)
-        return output_date.strftime('%Y-%m-%d')
-
-
-def sub_dates(input_date, num_days):
-        """
-        Subtract a specified number of days from a given date.
-
-        Parameters:
-        input_date (str): The input date in 'YYYY-MM-DD' format.
-        num_days (int): The number of days to subtract.
-
-        Returns:
-        str: The resulting date after subtracting the specified number of days
-        in 'YYYY-MM-DD' format.
-        """
-        input_date = datetime.strptime(fcst_date, '%Y-%m-%d')
-        output_date = input_date - timedelta(days=num_days)
-        return output_date.strftime('%Y-%m-%d')
+# %%
+# Define Functions
 
 
 def pull_data(stationID, start_date, end_date):
@@ -78,7 +52,6 @@ def pull_data(stationID, start_date, end_date):
                              index_col=['datetime'])
         return data
 
-
 def calc_mean(dataframe, period, data_col, start_date, end_date):
         """
         Calculate the mean streamflow for a specified period.
@@ -100,24 +73,10 @@ def calc_mean(dataframe, period, data_col, start_date, end_date):
         return mean_flow
 
 # %%
-# Run code to get data and make forecasts
-
-# Create relevant dates for forecasting
+# Get data from Rest API using function
 
 
-week2_fcst_date = add_dates(fcst_date, 7)  # 2 week forecast date
-monthly_start = sub_dates(fcst_date, 31)  # Monthly start date
-monthly_end = sub_dates(fcst_date, 8)  # Monthly end date
-weekly_start = sub_dates(fcst_date, 15)  # Weekly start date
-weekly_end = sub_dates(fcst_date, 8)  # Weekly end date
-
-# Get last year's worth of data from Rest API for streamflow using
-# function & save data to variable 'data'
-site = '09506000'  # USGS site code for Camp Verde
-start = sub_dates(monthly_start, 365)  # Start date for streamflow data
-end = weekly_end  # End date for streamflow data
-
-data = pull_data(site, start, end)  # save API query to variable
+data = pull_data(site, start, end)  # save API query to variable 'data'
 
 # %%
 # Plot Data and Make Forecasts based on a good "SWAG"
@@ -160,41 +119,34 @@ horizontal_value2 = monthly_avg
 horizontal_value3 = week1_fcst
 horizontal_value4 = week2_fcst
 
-# Plot horizontal Lines and Labels
-# Last Week Avg Line
+# Plot horizontal Line Avg
 ax.hlines(horizontal_value, x_min, x_max, color='red', linestyle='--',
-          linewidth=2, label=f'Last WK Avg: {last_week_avg} cfs')
+          linewidth=2)
 ax.text(x_max, horizontal_value, 'Last Week Avg', va='center', ha='left',
         color='red')
 
-# 4-Week Avg Line
 ax.hlines(horizontal_value2, x_min, x_max, color='purple', linestyle='--',
-          linewidth=2, label=f'4-WK Avg: {monthly_avg} cfs')
+          linewidth=2)
 ax.text(x_max, horizontal_value2, '4-Week Avg', va='center', ha='left',
         color='purple')
 
-# Week 1 Forecast Line
 ax.hlines(horizontal_value3, x_min, x_max, color='green', linestyle='dotted',
-          linewidth=2, label=f'WK 1 Fcst: {week1_fcst} cfs')
+          linewidth=2)
 ax.text(x_max, horizontal_value3, '1-Week Fcst', va='center', ha='left',
         color='green')
 
-# Week 2 Forecast Line
 ax.hlines(horizontal_value4, x_min, x_max, color='blue', linestyle='dotted',
-          linewidth=2, label=f'WK 2 Fcst: {week2_fcst} cfs')
+          linewidth=2)
 ax.text(x_max, horizontal_value4, '2-Week Fcst', va='center', ha='left',
         color='blue')
 
 # Set Graph Attributes
-ax.set(title="Observed Flow and Forecasts", xlabel="Date", ylabel="Flow[cfs]")
-plt.xticks(rotation=45)  # Rotate x-axis labels
-plt.grid()  # Add gridlines
-plt.legend(loc='upper left')  # Add legend
+ax.set(title="Observed Flow and Forecast", xlabel="Date", ylabel="Flow[cfs]")
+plt.xticks(rotation=45)
+plt.grid()
+plt.legend(loc='lower right')
 
-# Print Most Recent Observed Flow and Date
-print('The most recent observation was on', data.index[-1], 'and the flow was',
-        data.iloc[-1]['flow'], 'cfs.')
 
 # Print My Forecast and a Message
-print('My week 1 forecast for', fcst_date, 'is', week1_fcst, 'cfs.')
-print('My week 2 forecast for', week2_fcst_date, 'is', week2_fcst, 'cfs.')
+print('My week 1 forecast is ', week1_fcst, 'cfs.')
+print('My week 2 forecast is ', week2_fcst, 'cfs.')
