@@ -13,9 +13,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 # %%
-# Set variables for data of interest
-
 # User Input Forecast Date for week 1 in YYYY-MM-DD format
+# Forecast Date for week 2 will be calculated based on this date
+
 fcst_date = '2023-12-04'
 
 # Define all functions to be used in code
@@ -120,7 +120,6 @@ data = pull_data(site, start, end)  # save API query to variable
 # %%
 # Plot Data and Make Forecasts based on a good "SWAG"
 
-####################
 # Get Monthly and Weekly Data of interest
 monthly_data = data[monthly_start:monthly_end]
 last_week = data[weekly_start:weekly_end]
@@ -129,8 +128,8 @@ last_week = data[weekly_start:weekly_end]
 weekly_mean = calc_mean(monthly_data, 'W', 'flow', monthly_start, monthly_end)
 
 # Calculate Avgs for last week and last 4 weeks
-last_week_avg = last_week['flow'].mean()
-monthly_avg = monthly_data['flow'].mean()
+last_week_avg = int(last_week['flow'].mean())
+monthly_avg = int(monthly_data['flow'].mean())
 
 # Make forecasts for week 1 and week 2 based on a good "SWAG";
 # I added the most recent flow to the difference between the
@@ -142,7 +141,7 @@ week2_fcst = int((monthly_data.iloc[-1]['flow']) +
                  abs(last_week_avg-monthly_avg)*.90)
 
 # Plot Data with Avg compared to observed flow
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(12, 7))
 ax.plot(monthly_data['flow'], color='orange',
         label='Observed Flow')  # Daily Observed Flow Curve
 ax.plot(weekly_mean['flow'], color='gray',
@@ -159,36 +158,41 @@ horizontal_value2 = monthly_avg
 horizontal_value3 = week1_fcst
 horizontal_value4 = week2_fcst
 
-# Plot horizontal Line Avg
+# Plot horizontal Lines and Labels
+# Last Week Avg Line
 ax.hlines(horizontal_value, x_min, x_max, color='red', linestyle='--',
-          linewidth=2)  # Last Week Avg Line
+          linewidth=2, label=f'Last WK Avg: {last_week_avg} cfs')
 ax.text(x_max, horizontal_value, 'Last Week Avg', va='center', ha='left',
-        color='red')  # Last Week Avg Label
+        color='red')
 
+# 4-Week Avg Line
 ax.hlines(horizontal_value2, x_min, x_max, color='purple', linestyle='--',
-          linewidth=2)  # 4-Week Avg Line
+          linewidth=2, label=f'4-WK Avg: {monthly_avg} cfs')
 ax.text(x_max, horizontal_value2, '4-Week Avg', va='center', ha='left',
-        color='purple')  # 4-Week Avg Label
+        color='purple')
 
+# Week 1 Forecast Line
 ax.hlines(horizontal_value3, x_min, x_max, color='green', linestyle='dotted',
-          linewidth=2)  # Week 1 Forecast Line
+          linewidth=2, label=f'WK 1 Fcst: {week1_fcst} cfs')
 ax.text(x_max, horizontal_value3, '1-Week Fcst', va='center', ha='left',
-        color='green')  # Week 1 Forecast Label
+        color='green')
 
+# Week 2 Forecast Line
 ax.hlines(horizontal_value4, x_min, x_max, color='blue', linestyle='dotted',
-          linewidth=2)  # Week 2 Forecast Line
+          linewidth=2, label=f'WK 2 Fcst: {week2_fcst} cfs')
 ax.text(x_max, horizontal_value4, '2-Week Fcst', va='center', ha='left',
-        color='blue')  # Week 2 Forecast Label
+        color='blue')
 
 # Set Graph Attributes
-ax.set(title="Observed Flow and Forecast", xlabel="Date", ylabel="Flow[cfs]")
+ax.set(title="Observed Flow and Forecasts", xlabel="Date", ylabel="Flow[cfs]")
 plt.xticks(rotation=45)  # Rotate x-axis labels
 plt.grid()  # Add gridlines
-plt.legend(loc='lower right')  # Add legend
+plt.legend(loc='upper left')  # Add legend
+
+# Print Most Recent Observed Flow and Date
+print('The most recent observation was on', data.index[-1], 'and the flow was',
+        data.iloc[-1]['flow'], 'cfs.')
 
 # Print My Forecast and a Message
-print('The most recent observation is on', data.index[-1], 'and the flow was',
-      data.iloc[-1]['flow'], 'cfs.')
-
-print('My week 1 forecast for', fcst_date, 'is ', week1_fcst, 'cfs.')
-print('My week 2 forecast for', week2_fcst_date, 'is ', week2_fcst, 'cfs.')
+print('My week 1 forecast for', fcst_date, 'is', week1_fcst, 'cfs.')
+print('My week 2 forecast for', week2_fcst_date, 'is', week2_fcst, 'cfs.')
