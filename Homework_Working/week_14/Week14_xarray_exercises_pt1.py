@@ -74,9 +74,13 @@ ds = xr.open_mfdataset(downloaded_files)
 
 # TODO: Your code here
 
-ds = ds.drop_vars('crs')
+# This works
+ds = ds.drop('crs')
 
-# %
+# This also works
+# ds = ds.drop_vars('crs')
+
+# %%
 # Step 3:
 # Before getting to far into working with the
 # data, let's first look at where it came from.
@@ -87,7 +91,7 @@ ds = ds.drop_vars('crs')
 # TODO: Your code here
 
 attrs = ds.attrs
-attrs['author']
+print(attrs['author'])
 
 # %%
 # Step 4:
@@ -122,9 +126,6 @@ for var in ds:
 
 first_ds = ds.isel(day=0)
 
-last_ds = ds.isel(day=365)
-
-
 # %%
 # Step 6:
 # Now that you've got a single timestep out
@@ -132,8 +133,6 @@ last_ds = ds.isel(day=365)
 # "mean_vapor_pressure_deficit".
 
 first_ds['mean_vapor_pressure_deficit'].plot()
-
-last_ds['mean_vapor_pressure_deficit'].plot()
 
 # %%
 # Step 7:
@@ -143,8 +142,6 @@ last_ds['mean_vapor_pressure_deficit'].plot()
 # TODO: Your code here
 
 first_ds['potential_evapotranspiration'].plot()
-
-last_ds['potential_evapotranspiration'].plot()
 
 # %%
 # Step 8:
@@ -174,6 +171,7 @@ spatial_mean_ds = ds_subset.mean(dim=['lat', 'lon'])
 # axis plot the "potential_evapotranspration"
 # and on the second plot the "mean_vapor_pressure_deficit"
 # Do these look correlated to you?
+
 fig, axes = plt.subplots(2, 1, figsize=(12, 8))
 
 spatial_mean_ds[
@@ -213,6 +211,8 @@ x = spatial_mean_ds['potential_evapotranspiration']
 y = spatial_mean_ds['mean_vapor_pressure_deficit']
 
 np.corrcoef((x, x), (x, y), (y, x), (y, y))
+
+np.corrcoef(x, y)
 
 
 # %%
