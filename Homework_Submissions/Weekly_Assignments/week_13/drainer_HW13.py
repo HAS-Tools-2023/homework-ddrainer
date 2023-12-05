@@ -5,6 +5,7 @@
 # indentation on functions. I have tried to fix it but it keeps giving
 # me errors no matter which way I indent them. I also can't seem to get
 # rid of the indent error on line 195.
+# LC no worries that's fine. 
 
 # %%
 # Import packages
@@ -16,7 +17,7 @@ from datetime import datetime, timedelta
 # %%
 # User Input Forecast Date for week 1 in YYYY-MM-DD format
 # Forecast Date for week 2 will be calculated based on this date
-
+# LC - nice work getting this setup as a variable at the top of your script. 
 fcst_date = '2023-12-04'
 
 # User Input for USGS site code
@@ -24,7 +25,7 @@ site = '09506000'  # Camp Verde
 
 # Define all functions to be used in code
 
-
+# LC nice function this is handy!
 def add_dates(input_date, num_days):
         """
         Add a specified number of days to a given date.
@@ -106,8 +107,7 @@ def calc_mean(dataframe, period, data_col, start_date, end_date):
 # Run code to get data and make forecasts
 
 # Create relevant dates for forecasting
-
-
+# LC - I got rid of extra white space between your comments and your script
 week2_fcst_date = add_dates(fcst_date, 7)  # 2 week forecast date
 monthly_start = sub_dates(fcst_date, 31)  # Monthly start date
 monthly_end = sub_dates(fcst_date, 8)  # Monthly end date
@@ -117,6 +117,7 @@ weekly_end = sub_dates(fcst_date, 8)  # Weekly end date
 # Get last year's worth of data from Rest API for streamflow using
 # function & save data to variable 'data'
 start = sub_dates(monthly_start, 365)  # Start date for streamflow data
+# LC - You should avoid giving the same variable two names. You can just keep calling it weekly_end whenever you use it and that will make this easier to read. 
 end = weekly_end  # End date for streamflow data
 
 data = pull_data(site, start, end)  # save API query to variable
@@ -157,6 +158,7 @@ ax.plot(hline=week2_fcst)  # Week 2 Forecast Line
 
 # Set limits for horizontal line for avgs
 x_min, x_max = ax.get_xlim()  # Get x-axis limits
+#LC -- here too you can avoid renaming variables that were already defined. It will be easier to read your script below if you see that horizontal lines are appearing at 'week1_fcst' rather than 'horizontal_value3' 
 horizontal_value = last_week_avg
 horizontal_value2 = monthly_avg
 horizontal_value3 = week1_fcst
@@ -170,6 +172,7 @@ ax.text(x_max, horizontal_value, 'Last Week Avg', va='center', ha='left',
         color='red')
 
 # 4-Week Avg Line
+# LC This is good but is something you could consider making with a for loop next time. You could hand it a list of horizontal line locations, their desired labels and colors and then have it loop over the list and create the lines. See the example of plot looping I did in the class notes where I re-worked claires plotting script. 
 ax.hlines(horizontal_value2, x_min, x_max, color='purple', linestyle='--',
           linewidth=2, label=f'4-WK Avg: {monthly_avg} cfs')
 ax.text(x_max, horizontal_value2, '4-Week Avg', va='center', ha='left',

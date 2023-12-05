@@ -2,6 +2,10 @@
 ### HWRS 501
 ### 5 Dec 2023, Homework 14
 
+### Grade
+3/3: Great work this semester! I'm so glad you found the class useful and that it is already helping you with some work for other classes. Great suggestion on listing other packages and topics up front even if we can't get to all of them. 
+
+
 1. My favorite and most useful topics were plotting with matplotlib and xarray, and learning how to load/read in data from different sources. Those seem to be the most applicable python tools for atmospheric science and hydrology applications. 
    
 2. With my limited knowledge of python, I just don't know what I don't know. If anything, I would say more complex mapping, computation, or statistical analysis. Some specific atmospheric science, hydrology, or meteorology packages could be introduced--I'm thinking something like MetPy or SharpPy (more ATMO-focused, I think).
